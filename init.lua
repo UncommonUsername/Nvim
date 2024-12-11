@@ -32,9 +32,11 @@ vim.g.mapleader = ' '
 -- Clear search highlight
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
--- Delete without saving to clipboard. Uncomment if you want to replace the d with X.
--- vim.keymap.set({'n', 'x'}, 'x', '"_x')
--- vim.keymap.set({'n', 'x'}, 'X', '"_d')
+-- Copy to clipboard
+vim.keymap.set({'n', 'x'}, 'gy', '"+y')
+
+-- Paste from clipboard
+vim.keymap.set({'n', 'x'}, 'gp', '"+p')
 
 -- ========================================================== --
 -- =                        PLUGINS                         = --
@@ -76,6 +78,7 @@ lazy.opts = {}
 lazy.setup({
 	{'ellisonleao/gruvbox.nvim', priority = 1000, config = true, opts = ...},
 	{'nvim-lualine/lualine.nvim'},
+    {'nvim-treesitter/nvim-treesitter', build = ':TSUpdate'},
 })
 
 -- ========================================================== --
@@ -90,6 +93,13 @@ require('lualine').setup({
 		component_separator = '|',
 		section_separators = '',
 	},
+})
+
+require('nvim-treesitter.configs').setup({
+    ensure_installed = { 'lua', 'c', 'cpp', 'python', 'javascript' }, -- Adjust languages as needed
+    highlight = {
+        enable = true,
+    },
 })
 
 -- ========================================================== --
